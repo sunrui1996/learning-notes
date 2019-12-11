@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画（图片切换）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      .wrap {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .wrap > img {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+      }
+      ul {
+        list-style: none;
+        position: absolute;
+        left: 0;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        z-index: 2;
+      }
+      li {
+        width: 100px;
+        height: 100px;
+        border: 10px solid rgba(255, 255, 255, .5);
+        border-radius: 50%;
+        overflow: hidden;
+        display: inline-block;
+        text-align: center;
+        margin: 0 10px;
+      }
+      li img {
+        width: 100%;
+        height: 100%;
+      }
+      .wrap > img:target {
+        z-index: 2;
+      }
+      #bg1:target {
+        animation: slideLeft 1s;
+      }
+      @keyframes slideLeft {
+        0% {
+          transform: translate(-500px, 0);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+      #bg2:target {
+        animation: slideTop 1s;
+      }
+      @keyframes slideTop {
+        0% {
+          transform: translate(0, -500px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+      #bg3:target {
+        animation: zoomIn 1s;
+      }
+      @keyframes zoomIn {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      #bg4:target {
+        animation: zoomOut 1s;
+      }
+      @keyframes zoomOut {
+        0% {
+          transform: scale(2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      #bg5:target {
+        animation: rotate 1s;
+      }
+      @keyframes rotate {
+        0% {
+          transform: scale(0) rotate(0);
+        }
+        100% {
+          transform: scale(1) rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <img src="http://pic1.win4000.com/wallpaper/6/5860a7ffed06c.jpg" id="bg1">
+      <img src="http://i557com-1251420446.picgz.myqcloud.com/wp-content/uploads/2018/07/1531409911.jpg?imageMogr2/interlace/1/crop/1920x1080" id="bg2">
+      <img src="http://pic.xiao4j.com/upload/pic/2017_1030/131136591.jpg" id="bg3">
+      <img src="http://b.zol-img.com.cn/desk/bizhi/image/3/1920x1080/1372990711605.jpg" id="bg4">
+      <img src="http://img.tuwandata.com/v2/thumb/all/YmZlOSwwLDAsNCwzLDEsLTEsMSw=/u/www.tuwan.com/uploads/allimg/1501/29/767-1501291I042.jpg" id="bg5">
+      <ul>
+        <li><a href="#bg1"><img src="http://pic1.win4000.com/wallpaper/6/5860a7ffed06c.jpg"></a>
+        </li>
+        <li><a href="#bg2"><img src="http://i557com-1251420446.picgz.myqcloud.com/wp-content/uploads/2018/07/1531409911.jpg?imageMogr2/interlace/1/crop/1920x1080"></a>
+        </li>
+        <li><a href="#bg3"><img src="http://pic.xiao4j.com/upload/pic/2017_1030/131136591.jpg"></a></li>
+        <li><a href="#bg4"><img src="http://b.zol-img.com.cn/desk/bizhi/image/3/1920x1080/1372990711605.jpg"></a>
+        </li>
+        <li><a href="#bg5"><img src="http://img.tuwandata.com/v2/thumb/all/YmZlOSwwLDAsNCwzLDEsLTEsMSw=/u/www.tuwan.com/uploads/allimg/1501/29/767-1501291I042.jpg"></a></li>
+      </ul>
+    </div>
+  </body>
+</html>

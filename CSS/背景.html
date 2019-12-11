@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>背景</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      ul {
+        list-style-type: none;
+      }
+      li {
+        float: left;
+        width: 100px;
+        height: 100px;
+        padding: 20px;
+        margin: 10px;
+        border: 15px solid rgba(65, 212, 224, 0.4);
+        background: url(http://img.zcool.cn/community/0104b4575274ce6ac72525aec3c290.png@1280w_1l_2o_100sh.png) no-repeat;
+        /* 设置背景图大小 */
+        background-size: 160px 160px;
+      }
+      li:nth-child(1) {
+        /* 背景从边框区开始显示 */
+        background-origin: border-box;
+      }
+      li:nth-child(2) {
+        /* 背景从 padding 区开始显示 */
+        /* 默认值 */
+        background-origin: padding-box;
+      }
+      li:nth-child(3) {
+        /* 背景从内容区开始显示 */
+        background-origin: content-box;
+      }
+      li:nth-child(4) {
+        /* 背景从边框区开始裁剪 */
+        /* 默认值 */
+        background-clip: border-box;
+      }
+      li:nth-child(5) {
+        /* 背景从 padding 区开始裁剪 */
+        background-clip: padding-box;
+      }
+      li:nth-child(6) {
+        /* 背景从内容区开始裁剪 */
+        background-clip: content-box;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </body>
+</html>

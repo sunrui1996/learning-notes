@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>圆角边框</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      ul {
+        list-style: none;
+      }
+      li {
+        float: left;
+        width: 100px;
+        height: 100px;
+        border: 1px solid red;
+        margin: 30px;
+      }
+      li:nth-child(1) {
+        /* 斜杠前分别为左上、右上、右下、左下的水平半径 */
+        /* 斜杠后分别为左上、右上、右下、左下的垂直半径 */
+        border-radius: 10px 20px 30px 40px / 5px 10px 15px 20px;
+      }
+      /* 实现正圆 */
+      li:nth-child(2) {
+        border-radius: 50%;
+      }
+      /* 实现水平椭圆 */
+      li:nth-child(3) {
+        height: 50px;
+        border-radius: 50%;
+      }
+      /* 实现垂直椭圆 */
+      li:nth-child(4) {
+        width: 50px;
+        border-radius: 50%;
+      }
+      /* 实现半圆 */
+      li:nth-child(5) {
+        border-radius: 50px 50px 0 0;
+        height: 50px;
+      }
+      /* 实现扇形 */
+      li:nth-child(6) {
+        width: 50px;
+        height: 50px;
+        border-radius: 0 100% 0 0;
+      }
+      /* 实现内圆边框
+      内圆半径 = 外圆半径 - 边框宽度
+      如果算出来的内圆半径 ≤ 0，内圆就会是直角效果 */
+      li:nth-child(7) {
+        border: 10px solid rgb(251, 194, 95);
+        border-radius: 15px 20px 30px 40px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </body>
+</html>

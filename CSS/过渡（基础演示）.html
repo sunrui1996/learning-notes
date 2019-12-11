@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>过渡（基础演示）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #2192bc;
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: #ffd4dc;
+        border-radius: 50%;
+        margin: 100px auto;
+        box-shadow: 0 0 0 20px transparent;
+        transition: box-shadow 1s;
+      }
+      .box:hover {
+        box-shadow: 0 0 0 0 white;
+      }
+      /* 过渡动画效果思考的步骤
+      1、找到过渡属性
+      2、找到过渡属性起始值和结束值
+      3、在合适的位置上增加 transition 属性
+
+      过渡属性  box-shadow
+      起始值  20px  transparent
+      结束值  0  white
+      */
+    </style>
+  </head>
+
+  <body>
+    <div class="box"></div>
+  </body>
+</html>

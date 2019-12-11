@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画（2D）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      div {
+        float: left;
+        margin: 100px 50px;
+        width: 100px;
+        height: 150px;
+        transition: transform 1s;
+      }
+      .div1 {
+        background-color: red;
+      }
+      .div2 {
+        background-color: green;
+      }
+      .div3 {
+        background-color: pink;
+      }
+      .div4 {
+        background-color: blue;
+      }
+      .div5 {
+        background-color: grey;
+      }
+      .div1:hover {
+        /* 旋转函数 */
+        transform: rotate(90deg);
+      }
+      .div2:hover {
+        /* 倾斜函数 */
+        transform: skew(15deg, 30deg);
+      }
+      .div3:hover {
+        /* 缩放函数 */
+        transform: scale(1.5, 2);
+      }
+      .div4:hover {
+        /* 位移函数 */
+        transform: translate(50px, 50px);
+      }
+      .div5:hover {
+        /* 2D转换方法可以合在一起写 */
+        transform: rotate(30deg) scale(.5);
+        /* 旋转的基准点可以改变 */
+        transform-origin: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="div1"></div>
+    <div class="div2"></div>
+    <div class="div3"></div>
+    <div class="div4"></div>
+    <div class="div5"></div>
+  </body>
+</html>

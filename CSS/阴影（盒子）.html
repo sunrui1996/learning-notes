@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>阴影（盒子）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      ul {
+        list-style: none;
+      }
+      li {
+        float: left;
+        width: 70px;
+        height: 70px;
+        border: 1px solid orange;
+        margin: 30px;
+      }
+      li:nth-child(1) {
+        /* 盒子阴影 */
+        box-shadow: 5px 0 10px 0 green;
+      }
+      li:nth-child(2) {
+        /* 单边阴影 */
+        box-shadow: 10px 0 10px -5px green;
+      }
+      li:nth-child(3) {
+        /* 类似边框，但不算在盒子模型内 */
+        box-shadow: 0 0 0 5px green;
+      }
+      li:nth-child(4) {
+        /* 多重阴影 */
+        box-shadow: 5px 5px 7px 0 green, 10px 10px 7px 0 red, 15px 15px 7px 0 blue;
+      }
+      li:nth-child(5) {
+        /* 内阴影 */
+        box-shadow: 0 5px 20px 0 green inset;
+      }
+      li:nth-child(6) {
+        /* 文本阴影 */
+        text-shadow: 5px 5px 2px green;
+        font-size: 25px;
+        text-align: center;
+      }
+      li:nth-child(7) {
+        /* 镂空字体 */
+        color: transparent;
+        -webkit-text-stroke: 1px green;
+        width: 150px;
+        font-size: 37px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li>嗯哼嗯哼</li>
+      <li>嗯哼嗯哼</li>
+    </ul>
+  </body>
+</html>
