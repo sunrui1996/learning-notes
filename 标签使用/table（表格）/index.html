@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基础表格</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "微软雅黑";
+        font-size: 16px;
+      }
+      .box {
+        margin: 20px auto;
+        padding: 20px;
+        width: 400px;
+        border: 1px solid green;
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px 0 rgba(50, 166, 47, 0.53);
+      }
+      .box thead {
+        background-color: #008000;
+        color: #fff;
+      }
+      .box thead tr {
+        height: 35px;
+      }
+      .box thead th {
+        width: 100px;
+      }
+      .box thead th.cursor {
+        cursor: pointer;
+      }
+      .box tbody tr {
+        height: 30px;
+      }
+      .box tbody tr:nth-child(even) {
+        background-color: rgb(255, 218, 99);
+      }
+      .box tbody td {
+        width: 100px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <!-- 单元格间距：0，单元格内填充： 0 -->
+      <table id="tab" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+          <th class="cursor">姓名</th>
+          <th class="cursor">年龄</th>
+          <th class="cursor">武力</th>
+          <th class="cursor">性别</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
+</html>
