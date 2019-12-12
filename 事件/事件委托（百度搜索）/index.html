@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件委托（百度搜索）</title>
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+
+  <body>
+    <div class="box">
+      <input type="text" id="search">
+      <ul id="searchBox"></ul>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script>
+      var $search = $("#search");
+      var $searchBox = $("#searchBox");
+
+      // 向百度服务器发送JSONP请求，把数据获取到后绑定到容器中
+      function bindHTML() {
+        $.ajax({
+          url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + $search.val(),
+          dataType: "jsonp",
+          jsonp: "cb",
+          success: function callback(data) {
+            data = data.s;
+            var str = "";
+            $.each(data, function (index, item) {
+              if (index <= 3) {
+                str += '<li>' + item + '</li>';
+              }
+            });
+            if (str.length > 0) {
+              $searchBox.html(str).show();
+            }
+          }
+        });
+      }
+
+      $search.on("focus keyup", function () {
+        var val = $(this).val();
+        if (val.length > 0) {
+          bindHTML();
+        } else {
+          $searchBox.hide();
+        }
+      });
+
+      $(document).on("click", function (e) {
+        if (e.target.tagName === "LI" && e.target.parentNode.id === "searchBox") { // 如果点击的是li
+          $search.val(e.target.innerHTML);
+          $searchBox.hide();
+        } else if (e.target.id === "search") { //如果点击的是文本框
+          return;
+        } else { //如果点击的是其他地方
+          $searchBox.hide();
+        }
+      });
+    </script>
+  </body>
+</html>

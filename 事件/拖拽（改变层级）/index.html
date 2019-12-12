@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽（改变层级）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        font-family: "微软雅黑", sans-serif;
+      }
+      div {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background-color: red;
+        cursor: move;
+      }
+      #div2 {
+        top: 120px;
+        left: 100px;
+        background-color: yellow;
+      }
+      #div3 {
+        top: 60px;
+        left: 170px;
+        background-color: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <div id="div3"></div>
+
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script>
+      var div1 = document.getElementById("div1");
+      var zindex = 1;
+
+      // 拖拽的原理：
+      // 当鼠标在盒子上按下的时候，开始拖拽（给盒子绑定mousemove和mouseup）
+      // 当鼠标移动的时候，计算盒子的最新位置
+      // 当鼠标抬起的时候说明拖拽已经结束了（给盒子解绑mousemove和mouseup）
+
+      utils.on(div1, "mousedown", down);
+      utils.on(div2, "mousedown", down);
+      utils.on(div3, "mousedown", down);
+
+      // 用于改变this关键字
+      function processThis(obj, fn) {
+        return function (e) {
+          fn.call(obj, e);
+        };
+      }
+
+      function down(e) {
+        this.minLeft = 0;
+        this.minTop = 0;
+        this.maxLeft = (document.documentElement.clientWidth || document.body.clientWidth) - this.offsetWidth;
+        this.maxTop = (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight;
+        // 获取box距离鼠标的偏移
+        this.oLeft = e.clientX - this.offsetLeft;
+        this.oTop = e.clientY - this.offsetTop;
+        if (this.setCapture) {
+          this.setCapture();
+          utils.on(this, "mousemove", move);
+          utils.on(this, "mouseup", up);
+        } else {
+          this.MOVE = processThis(this, move);
+          this.UP = processThis(this, up);
+          utils.on(document, "mousemove", this.MOVE);
+          utils.on(document, "mouseup", this.UP);
+        }
+        e.preventDefault();
+        // 改变被拖拽盒子的z-index
+        this.style.zIndex = ++zindex;
+      }
+
+      function move(e) {
+        var curLeft = e.clientX - this.oLeft,
+          curTop = e.clientY - this.oTop;
+        curLeft = curLeft < this.minLeft ? this.minLeft : (curLeft > this.maxLeft ? this.maxLeft : curLeft);
+        curTop = curTop < this.minTop ? this.minTop : (curTop > this.maxTop ? this.maxTop : curTop);
+        this.style.left = curLeft + "px";
+        this.style.top = curTop + "px";
+      }
+
+      function up(e) {
+        if (this.releaseCapture) {
+          this.releaseCapture();
+          utils.off(this, "mousemove", move);
+          utils.off(this, "mouseup", up);
+        } else {
+          utils.off(document, "mousemove", this.MOVE);
+          utils.off(document, "mouseup", this.UP);
+        }
+      }
+
+      // "焦点丢失"：当鼠标移动过快的时候，鼠标会脱离盒子，导致盒子的mouseup和mousemove都移除不掉
+      // 在IE和火狐浏览器中，使用this.setCapture()将盒子和鼠标绑定在一起，使用this.releaseCapture()解绑
+      // 谷歌中，将mousemove和mouseup绑定给document
+    </script>
+  </body>
+</html>

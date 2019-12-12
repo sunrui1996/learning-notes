@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+input {
+  outline: none;
+  display: block;
+}
+ul {
+  list-style: none;
+}
+html, body {
+  font-size: 14px;
+  font-family: "微软雅黑", sans-serif;
+  color: #424242;
+}
+.box {
+  width: 500px;
+  margin: 50px auto;
+}
+.box input {
+  width: 478px;
+  height: 32px;
+  border: 1px solid rgb(184, 184, 184);
+  padding: 0 10px;
+}
+.box ul {
+  border: 1px solid rgb(184, 184, 184);
+  border-top: none;
+  display: none;
+}
+.box ul li {
+  height: 23px;
+  line-height: 23px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+.box ul li:hover {
+  background-color: rgb(240, 240, 240);
+}

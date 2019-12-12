@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽（抛物线回弹）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        font-family: "微软雅黑", sans-serif;
+      }
+      #box {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background-color: red;
+        cursor: move;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box"></div>
+
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script>
+      var box = document.getElementById("box");
+
+      utils.on(box, "mousedown", down);
+
+      function processThis(obj, fn) {
+        return function (e) {
+          fn.call(obj, e);
+        }
+      }
+
+      function down(e) {
+        this.minLeft = 0;
+        this.minTop = 0;
+        this.maxLeft = (document.documentElement.clientWidth || document.body.clientWidth) - this.offsetWidth;
+        this.maxTop = (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight;
+        this.oLeft = e.clientX - this.offsetLeft;
+        this.oTop = e.clientY - this.offsetTop;
+        if (this.setCapture) {
+          this.setCapture();
+          utils.on(this, "mousemove", move);
+          utils.on(this, "mouseup", up);
+        } else {
+          this.MOVE = processThis(this, move);
+          this.UP = processThis(this, up);
+          utils.on(document, "mousemove", this.MOVE);
+          utils.on(document, "mouseup", this.UP);
+        }
+        e.preventDefault();
+        // 在盒子上按下鼠标的时候停止盒子的运动
+        clearInterval(this.flyTimer);
+        clearInterval(this.dropTimer);
+        this.flySpeed = this.dropSpeed = 0;
+      }
+
+      function move(e) {
+        var curLeft = e.clientX - this.oLeft,
+          curTop = e.clientY - this.oTop;
+        curLeft = curLeft < this.minLeft ? this.minLeft : (curLeft > this.maxLeft ? this.maxLeft : curLeft);
+        curTop = curTop < this.minTop ? this.minTop : (curTop > this.maxTop ? this.maxTop : curTop);
+        this.style.left = curLeft + "px";
+        this.style.top = curTop + "px";
+
+        // 计算水平方向移动的速度
+        // 在浏览器最小反应时间内触发一次move，记录当前盒子的位置，让当前位置 - 上一次记录的位置 = 当前最后一次的偏移
+        if (!this.pre) {
+          this.pre = this.offsetLeft;
+        } else {
+          this.flySpeed = this.offsetLeft - this.pre;
+          this.pre = this.offsetLeft;
+        }
+      }
+
+      function up(e) {
+        if (this.releaseCapture) {
+          this.releaseCapture();
+          utils.off(this, "mousemove", move);
+          utils.off(this, "mouseup", up);
+        } else {
+          utils.off(document, "mousemove", this.MOVE);
+          utils.off(document, "mouseup", this.UP);
+        }
+        // 当鼠标离开结束拖拽的时候，开始进行水平和垂直方向的动画运动
+        fly.call(this);
+        drop.call(this);
+      }
+
+      function fly() {
+        var _this = this;
+        this.flyTimer = setInterval(function () {
+          // 当速度＜0.5时停止盒子运动
+          if (Math.abs(_this.flySpeed) < 0.5) {
+            clearInterval(_this.flyTimer);
+            return;
+          }
+          // 运动的速度一直减慢，直到停止（"指数衰减运动"）
+          _this.flySpeed *= 0.99;
+          var curLeft = _this.offsetLeft + _this.flySpeed;
+          if (curLeft >= _this.maxLeft) {
+            _this.style.left = _this.maxLeft + "px";
+            _this.flySpeed *= -1;
+          } else if (curLeft <= _this.minLeft) {
+            _this.style.left = _this.minLeft + "px";
+            _this.flySpeed *= -1;
+          } else {
+            _this.style.left = curLeft + "px";
+          }
+        }, 10);
+      }
+
+      function drop() {
+        var _this = this;
+        this.dragFlag = 0;
+        this.dropTimer = setInterval(function () {
+          if (_this.dragFlag > 1) {
+            clearInterval(_this.dropTimer);
+            return;
+          }
+          _this.dropSpeed = !_this.dropSpeed ? 9.8 : _this.dropSpeed + 9.8;
+          _this.dropSpeed *= 0.98;
+          var curTop = _this.offsetTop + _this.dropSpeed;
+          if (curTop >= _this.maxTop) {
+            _this.style.top = _this.maxTop + "px";
+            _this.dropSpeed *= -1;
+            _this.dragFlag++;
+          } else {
+            _this.style.top = curTop + "px";
+            _this.dragFlag = 0;
+          }
+          console.log(_this.dropSpeed);
+        }, 10);
+      }
+    </script>
+    <!--在相同移动距离下，鼠标移动越快，move方法触发的次数越少，反之越多
+
+    即将松开的那一瞬间鼠标的位置 - 上一次鼠标的位置 = 浏览器最小反应时间内最后一次move的时候鼠标的偏移距离
+    直接影响了水平方向运动的速度，偏移的距离大，水平运动速度就快，反之就慢
+
+    在JS盒子模型中，offsetLeft是获取当前元素的左偏移，获取到的值永远不会出现小数，它会把真实的left值按照小数点的四舍五入进行计算-->
+  </body>
+</html>
