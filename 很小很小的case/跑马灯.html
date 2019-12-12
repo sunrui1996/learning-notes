@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>跑马灯</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "微软雅黑", sans-serif;
+      }
+      #box {
+        margin: 50px auto;
+        padding: 0 10px;
+        width: 1000px;
+        height: 35px;
+        line-height: 35px;
+        color: rgb(80, 80, 80);
+        border: 1px solid rgb(0, 170, 78);
+        background-color: rgb(191, 251, 213);
+      }
+      #box div span {
+        color: rgb(255, 78, 78);
+        font-weight: bold;
+        font-size: 16px;
+      }
+      #wrap {
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      #wrap div {
+        display: inline-block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box">
+      <div id="wrap">
+        <div id="conBegin"><span>阿西巴：</span>土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的
+        </div>
+        <div id="conEnd"><span>阿西巴：</span>土地是以它的肥沃和收获而被估价的；才能也是土地，不过它生产的不是粮食，而是真理。如果只能滋生瞑想和幻想的话，即使再大的才能也只是砂地或盐池，那上面连小草也长不出来的
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let box = document.getElementById("box");
+      let wrap = document.getElementById("wrap");
+      let begin = document.getElementById("conBegin");
+      let end = document.getElementById("conEnd");
+
+      function move() {
+        wrap.scrollLeft += 1;
+        if (wrap.scrollLeft === begin.clientWidth) wrap.scrollLeft = 0;
+      }
+
+      let timer = setInterval(move, 10);
+
+      box.onmouseover = function () {
+        clearInterval(timer);
+      };
+      box.onmouseout = function () {
+        timer = setInterval(move, 10);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>控制运动动画</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #box {
+        position: absolute;
+        top: 30px;
+        left: 500px;
+        width: 100px;
+        height: 100px;
+        background-color: rgb(128, 182, 255);
+      }
+      .btn {
+        margin: 200px auto;
+        text-align: center;
+      }
+      .btn input {
+        display: inline-block;
+        margin: 0 10px;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        border: 1px solid green;
+        outline: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box"></div>
+    <div class="btn">
+      <input type="button" value="向左" id="btnLeft">
+      <input type="button" value="向右" id="btnRight">
+    </div>
+
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script>
+      var box = document.getElementById("box");
+      var minLeft = 0;
+      var maxLeft = utils.win("clientWidth") - box.offsetWidth;
+      var step = 5;
+      var interval = 10;
+
+      function move(target) {
+        clearTimeout(box.timer);
+        var curLeft = utils.css(box, "left");
+        if (curLeft > target) { // 向左
+          curLeft - step <= 0 ? utils.css(box, "left", target) : utils.css(box, "left", curLeft - step);
+        } else if (curLeft < target) { // 向右
+          curLeft + step >= target ? utils.css(box, "left", target) : utils.css(box, "left", curLeft + step);
+        } else { // 不动
+          return;
+        }
+
+        box.timer = setTimeout(function () {
+          move(target);
+        }, 10);
+      }
+
+      document.getElementById("btnLeft").onclick = function () {
+        move(minLeft);
+      };
+      document.getElementById("btnRight").onclick = function () {
+        move(maxLeft);
+      }
+    </script>
+  </body>
+</html>

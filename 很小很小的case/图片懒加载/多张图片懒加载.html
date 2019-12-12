@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多张图片懒加载</title>
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+
+  <body>
+    <ul class="news" id="news"></ul>
+
+    <script>
+      let news = document.getElementById("news");
+      let imgList = news.getElementsByTagName("img");
+
+      // 1、获取需要绑定的数据
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", "data.json");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
+          let responseText = xhr.responseText;
+          let data = JSON.parse(responseText);
+
+          // 2、数据绑定，把 data 中存储的数据绑定在页面中
+          let str = "";
+          for (let i = 0; i < data.length; i++) {
+            str += '<li><div><img src="" data-src="' + data[i].src + '" alt=""></div><div><h2>' + data[i].title + '</h2><p>' + data[i].description + '</p></div></li>';
+          }
+          news.innerHTML = str;
+        }
+      };
+      xhr.send();
+
+
+      // 实现懒加载
+      function loadImg(curImg) {
+        let oImg = new Image();
+        oImg.src = curImg.getAttribute("data-src");
+        oImg.onload = function () {
+          curImg.src = this.src;
+          curImg.style.display = "block";
+          fadeIn(curImg);
+          oImg = null;
+        };
+        curImg.isLoad = true;
+      }
+
+      // 实现渐现效果
+      function fadeIn(curImg) {
+        let timer = setInterval(function () {
+          let opacity = getCss(curImg, "opacity");
+          if (opacity >= 1) {
+            clearInterval(timer);
+            return;
+          }
+          curImg.style.opacity = opacity + 0.01;
+        }, 10);
+      }
+
+      // 绑定懒加载
+      function handleAllImg() {
+        for (let i = 0; i < imgList.length; i++) {
+          let curImg = imgList[i];
+          // 当前图片处理过了就不需要再重新进行处理了
+          if (curImg.isLoad === true) continue;
+          let A = offset(curImg.parentNode).top + curImg.parentNode.offsetHeight;
+          let B = win("scrollTop") + win("clientHeight");
+
+          if (A < B) loadImg(curImg);
+        }
+      }
+
+      // 触发懒加载绑定
+      setTimeout(handleAllImg, 100);
+      window.onscroll = handleAllImg;
+
+      function getCss(curEle, attr) {
+        var val = null,
+          reg = null;
+        if ("getComputedStyle" in window) {
+          val = window.getComputedStyle(curEle, null)[attr];
+        } else {
+          // 处理IE6-8透明度问题
+          if (attr === "opacity") {
+            val = curEle.currentStyle["filter"];
+            reg = /^alpha\(opacity=(\d+(?:\.\d+)?)\)$/i;
+            val = reg.test(val) ? reg.exec(val)[1] / 100 : 1;
+          } else {
+            val = curEle.currentStyle[attr];
+          }
+        }
+        // 去单位
+        reg = /^(-?\d+(\.\d+)?)(px|pt|rem|em)?$/i;
+        return reg.test(val) ? parseFloat(val) : val;
+      }
+
+      function win(attr, value) {
+        // 获取属性
+        if (typeof value === "undefined") {
+          return document.documentElement[attr] || document.body[attr];
+        }
+
+        // 设置属性
+        document.documentElement[attr] = value;
+        document.body[attr] = value;
+      }
+
+      function offset(curEle) {
+        var left = null,
+          top = null,
+          parent = curEle.offsetParent;
+        left += curEle.offsetLeft;
+        top += curEle.offsetTop;
+        while (parent) {
+          // IE8 下的 offsetLeft 和 offsetTop 属性包含了边框的宽度
+          // 如果不是标准的 IE8 浏览器则进行边框累加
+          if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+            // 累加父级参照物的边框
+            left += parent.clientLeft;
+            top += parent.clientTop;
+          }
+          // 累加父级参照物本身的偏移
+          left += parent.offsetLeft;
+          top += parent.offsetTop;
+          parent = parent.offsetParent;
+        }
+        return {
+          left: left,
+          top: top
+        };
+      }
+    </script>
+  </body>
+</html>

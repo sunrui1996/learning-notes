@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单张图片懒加载</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #box {
+        margin: 1000px auto;
+        width: 460px;
+        height: 258px;
+        border: 1px solid #000;
+        background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576214535428&di=27f00275edd64c07e53030d7e97edd18&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fa39bac47afb919b7b92f21f80218bae9e128650fb396-o1BXWL_fw658") no-repeat center center rgba(214, 214, 214, .4);
+        background-size: 20%;
+      }
+      #box img {
+        /* 默认隐藏，防止碎图 */
+        display: none;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box">
+      <img src=""
+           data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518702867189&di=ef676285e047e852ee3e6f41520a1c85&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F8%2F587981cf02d8a.jpg">
+    </div>
+
+    <script type="text/javascript">
+      // 当页面滚动到一定位置时加载图片
+      let box = document.getElementById("box");
+      let img = box.getElementsByTagName("img")[0];
+
+      window.onscroll = function () {
+        // 一开始 images 是隐藏的，所以其偏移都是 0，所以需要通过其容器 box 来进行比较
+        let boxOffset = offset(box).top + box.offsetHeight;
+        let htmlOffset = getAttr("scrollTop") + getAttr("clientHeight") + box.offsetHeight;
+        console.log(boxOffset, htmlOffset);
+
+        if (boxOffset < htmlOffset) {
+          let oImg = new Image();
+          oImg.src = img.getAttribute("data-src");
+          oImg.onload = function () {
+            img.src = this.src;
+            img.style.display = "block";
+          };
+          // 不论图片地址是否有效，在上面判断成立后都将 window 的滚动事件清空
+          window.onscroll = null;
+        }
+      };
+
+      // 兼容获取浏览器盒子属性值
+      function getAttr(attr, value) {
+        if (typeof value === "undefined") {
+          return document.documentElement[attr] || document.body[attr];
+        }
+        document.documentElement[attr] = value;
+        document.body[attr] = value;
+      }
+
+      // 获取当前元素距 body 的偏移值
+      function offset(curEle) {
+        let left = curEle.offsetLeft;
+        let top = curEle.offsetTop;
+        let parent = curEle.offsetParent;
+
+        while (parent) {
+          if (navigator.userAgent.indexOf("MSIE 8.0") === -1) {
+            left += parent.clientLeft;
+            top += parent.clientTop;
+          }
+          left += parent.offsetLeft;
+          top += parent.offsetTop;
+          parent = parent.offsetParent;
+        }
+
+        return {
+          left: left,
+          top: top
+        };
+      }
+
+      // 通过定时器使图片延迟加载
+      // let images = document.getElementById("box").getElementsByTagName("images")[0];
+      // setTimeout(function() {
+      //   // 获取图片地址，验证地址的有效性
+      //   let oImg = new Image();
+      //   oImg.src = images.getAttribute("data-src");
+      //
+      //   // 当图片能够正常加载时才进行赋值
+      //   oImg.onload = function() {
+      //     images.src = images.getAttribute("data-src");
+      //     images.style.display = "block";
+      //     oImg = null;
+      //     // 输出图片加载所用时间
+      //     let newTime = new Date();
+      //     console.log(newTime - time);
+      //   }
+      //   let time = new Date();
+      // }, 1000);
+    </script>
+  </body>
+</html>

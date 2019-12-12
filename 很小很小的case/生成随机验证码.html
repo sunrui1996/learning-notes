@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>生成随机验证码</title>
+    <style>
+      .box {
+        width: 200px;
+        height: 50px;
+        margin: 20px auto;
+        border: 1px solid green;
+        line-height: 50px;
+        text-align: center;
+        letter-spacing: 5px;
+        cursor: pointer;
+        /* 禁止用户选中其中的文字 */
+        user-select: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box"></div>
+
+    <script>
+      // 获取四位验证码的函数
+      function queryCode() {
+        let result = "";
+        let areaStr = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+
+        for (let i = 0; i < 4; i++) {
+          let char = areaStr.charAt(Math.floor(Math.random() * 62 + 1));
+          // 如果 char 重复了，则重新获取 char（大小写也算重复）
+          while (result.toLowerCase().indexOf(char.toLowerCase()) !== -1) {
+            char = areaStr.charAt(Math.floor(Math.random() * 62 + 1));
+          }
+          result += char;
+        }
+        box.innerHTML = result;
+      }
+
+      let box = document.getElementsByClassName('box')[0];
+
+      // 加载页面需要执行一次这个方法：生成四位验证码
+      queryCode();
+
+      // 点击盒子重新生成验证码（此处不加小括号：这块只是在把函数绑定给元素的点击事件，方法还没有执行，点击的时候才执行）
+      box.onclick = queryCode;
+    </script>
+  </body>
+</html>

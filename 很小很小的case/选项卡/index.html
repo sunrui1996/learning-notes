@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选项卡</title>
+    <style>
+      * {
+        user-select: none;
+      }
+      body {
+        margin: 50px;
+      }
+      .box {
+        margin: 20px auto;
+        height: 171px;
+        width: 262px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        width: 262px;
+        height: 29px;
+      }
+      li {
+        float: left;
+        margin-right: 10px;
+        padding: 0.2em 0.5em;
+        background-color: rgb(207, 207, 207);
+        border: 1px solid rgb(140, 140, 140);
+        position: relative;
+        top: 1px;
+        cursor: pointer;
+      }
+      .box div {
+        border: 1px solid rgb(140, 140, 140);
+        clear: both;
+        width: 260px;
+        height: 140px;
+        line-height: 140px;
+        text-align: center;
+        display: none;
+      }
+      div.select {
+        display: block;
+      }
+      li.select {
+        background-color: #fff;
+        border-bottom: 1px solid #fff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <ul>
+        <li class="select">新闻</li>
+        <li>电影</li>
+        <li>音乐</li>
+      </ul>
+      <div class="select">热烈庆祝中国召开19大</div>
+      <div>羞羞的铁拳</div>
+      <div>毛不易——消愁</div>
+    </div>
+    <div class="box">
+      <ul>
+        <li>新闻</li>
+        <li class="select">电影</li>
+        <li>音乐</li>
+      </ul>
+      <div>热烈庆祝中国召开19大</div>
+      <div class="select">羞羞的铁拳</div>
+      <div>毛不易——消愁</div>
+    </div>
+    <div class="box">
+      <ul>
+        <li>新闻</li>
+        <li>电影</li>
+        <li class="select">音乐</li>
+      </ul>
+      <div>热烈庆祝中国召开19大</div>
+      <div>羞羞的铁拳</div>
+      <div class="select">毛不易——消愁</div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script>
+      function tabChange(container) {
+        var $box = $(container);
+        var $ul = $box.children("ul").eq(0);
+        var $oLis = $ul.children("li");
+        var $oDivs = $ul.nextAll();
+        $oLis.on("click", function () {
+          $(this).addClass("select").siblings().removeClass("select");
+          var curIndex = $(this).index();
+          $oDivs.each(function (index, item) {
+            index === curIndex ? $(this).addClass("select") : $(this).removeClass("select");
+          });
+        });
+      }
+
+      $(".box").each(function () {
+        tabChange($(this));
+      });
+    </script>
+  </body>
+</html>

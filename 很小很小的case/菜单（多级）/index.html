@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多级菜单</title>
+    <style>
+      body,
+      div,
+      ul,
+      li,
+      em,
+      span {
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        font-size: 14px;
+      }
+      ul {
+        list-style: none;
+      }
+      .box {
+        width: 300px;
+        margin: 10px;
+        padding: 10px;
+        background: #eee;
+      }
+      .box li {
+        line-height: 30px;
+        position: relative;
+      }
+      .box em {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 7px;
+        left: 0;
+        background: url("images/add.jpg") no-repeat center center;
+        cursor: pointer;
+        opacity: .5;
+      }
+      .box span {
+        display: inline-block;
+        padding-left: 20px;
+      }
+      .box em.open {
+        background: url("images/minus.jpg") no-repeat center center;
+        opacity: .5;
+      }
+      .box .two {
+        margin-left: 20px;
+        display: none;
+      }
+      .box .three {
+        margin-left: 40px;
+        display: none;
+      }
+      .box .four {
+        margin-left: 60px;
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box" id="box">
+      <ul class="one">
+        <li>
+          <em></em><span>第一级第一个</span>
+          <ul class="two">
+            <li><span>第二级第一个</span></li>
+            <li>
+              <em></em><span>第二级第二个</span>
+              <ul class="three">
+                <li><span>第三级第一个</span></li>
+                <li><span>第三级第二个</span></li>
+                <li>
+                  <em></em><span>第三级第三个</span>
+                  <ul class="four">
+                    <li><span>第四级第一个</span></li>
+                    <li><span>第四级第二个</span></li>
+                    <li><span>第四级第三个</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <em></em><span>第二级第三个</span>
+              <ul class="three">
+                <li><span>第三级第一个</span></li>
+                <li><span>第三级第二个</span></li>
+                <li><span>第三级第三个</span></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <em></em><span>第一级第二个</span>
+          <ul class="two">
+            <li><span>第二级第一个</span></li>
+            <li>
+              <em></em><span>第二级第二个</span>
+              <ul class="three">
+                <li><span>第三级第一个</span></li>
+                <li><span>第三级第二个</span></li>
+                <li>
+                  <em></em><span>第三级第三个</span>
+                  <ul class="four">
+                    <li><span>第四级第一个</span></li>
+                    <li><span>第四级第二个</span></li>
+                    <li><span>第四级第三个</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <em></em><span>第二级第三个</span>
+              <ul class="three">
+                <li><span>第三级第一个</span></li>
+                <li><span>第三级第二个</span></li>
+                <li><span>第三级第三个</span></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script>
+      $(function () {
+        // 给所有哥哥节点是em的span加上"小手"样式
+        $("em+span").css("cursor", "pointer");
+
+        // 使用事件委托实现显示/隐藏切换
+        $("#box").on("click", "em, span", function (e) {
+          var $ul = $(this).parent().children("ul").eq(0);
+
+          // 只有当点击的em或者span的父节点是ul时才进行操作（jQuery对象通过length的值来判断是否为空）
+          if ($ul.length > 0) {
+            if ($ul.css("display") === "none") {
+              $ul.show().siblings("em").addClass("open");
+            } else {
+              $ul.hide().siblings("em").removeClass("open").end()
+              // 当外层收起，里层所有ul都一并隐藏，并且移除em的"open"样式（此处的end()将操作对象还原为$ul）
+                .find("ul").hide().siblings("em").removeClass("open");
+            }
+          }
+
+          // // 稍微简化版
+          // if ($ul.length > 0) {
+          //   $ul.toggle().siblings("em").toggleClass("open");
+          //   if ($ul.css("display") === "none") {
+          //     $ul.find("ul").hide().siblings("em").removeClass("open");
+          //   }
+          // }
+        });
+      });
+    </script>
+  </body>
+</html>

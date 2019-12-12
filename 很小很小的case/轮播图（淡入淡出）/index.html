@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图（淡入淡出）</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "微软雅黑", sans-serif;
+        font-size: 14px;
+        user-select: none;
+      }
+      .banner {
+        width: 800px;
+        height: 400px;
+        overflow: hidden;
+        margin: auto;
+        position: relative;
+      }
+      .bannerInner {
+        width: 100%;
+        height: 100%;
+        background: url("images/load.gif") no-repeat center center rgba(173, 173, 173, .6);
+        background-size: 50px 50px;
+      }
+      .bannerInner div {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 0;
+        opacity: 0;
+      }
+      .bannerInner img {
+        width: 100%;
+        height: 100%;
+        display: none;
+      }
+      .bannerTip {
+        list-style: none;
+        position: absolute;
+        bottom: 20px;
+        right: 10px;
+        z-index: 2;
+      }
+      .bannerTip li {
+        float: left;
+        width: 17px;
+        height: 17px;
+        border-radius: 50% 50%;
+        margin: 0 5px 0 0;
+        background-color: rgba(72, 34, 255, .7);
+        cursor: pointer;
+      }
+      .bannerTip li.select {
+        background-color: rgba(251, 59, 59, 0.92);
+      }
+      a {
+        width: 30px;
+        height: 50px;
+        line-height: 46px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 35px;
+        font-weight: 500;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        color: rgb(43, 43, 43);
+        z-index: 2;
+        display: none;
+      }
+      .bannerLeft {
+        left: 0;
+      }
+      .bannerRight {
+        right: 0;
+      }
+      a:hover {
+        background-color: rgba(125, 125, 125, .7);
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="banner" id="banner">
+      <div class="bannerInner"></div>
+      <ul class="bannerTip"></ul>
+      <a href="javascript:;" class="bannerLeft"><</a>
+      <a href="javascript:;" class="bannerRight">></a>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/banner.js"></script>
+    <script type="text/javascript">
+      $("#banner").banner("data.json", 2000);
+    </script>
+  </body>
+</html>
