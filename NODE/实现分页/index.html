@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现分页</title>
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+
+  <body>
+    <div class="box">
+      <h2>
+        <span>编号</span>
+        <span>姓名</span>
+        <span>性别</span>
+        <span>成绩</span>
+      </h2>
+      <ul class="content" id="content"></ul>
+      <div class="page" id="page">
+        <span>FIRST</span>
+        <span>PREV</span>
+        <ul class="pageNum" id="pageNum"></ul>
+        <span>NEXT</span>
+        <span>LAST</span>
+        <input type="text" id="numInput" value="1" maxlength="2">
+      </div>
+    </div>
+
+    <!-- 必须先运行 server.js -->
+    <script type="text/javascript" src="./js/ajax.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
+  </body>
+</html>

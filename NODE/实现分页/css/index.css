@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  color: #323232;
+  font-size: 16px;
+  font-family: "微软雅黑", sans-serif;
+  user-select: none;
+}
+input {
+  outline: none;
+}
+ul {
+  list-style: none;
+}
+/* index */
+
+.box {
+  width: 800px;
+  margin: 20px auto 0;
+  padding: 10px;
+  border: 2px solid green;
+  text-align: center;
+}
+.box h2 {
+  height: 35px;
+  line-height: 35px;
+  font-size: 18px;
+  background-color: green;
+  color: #fff;
+}
+.box h2 span, .content li span {
+  width: 200px;
+  float: left;
+  text-align: center;
+}
+.content {
+  height: 300px;
+}
+.content li {
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+}
+.content li:nth-child(even) {
+  background-color: rgba(213, 213, 213, 0.4);
+}
+.content li:hover {
+  background-color: rgba(219, 223, 37, 0.31);
+}
+.page {
+  height: 22px;
+  line-height: 22px;
+  display: inline-block;
+  margin-top: 15px;
+}
+.page span, .page ul, .page li, .page input {
+  float: left;
+  height: 20px;
+  line-height: 20px;
+  margin: 0 2px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid green;
+  cursor: pointer;
+}
+.page span:hover, .page li:hover {
+  background-color: rgba(219, 223, 37, 0.31);
+}
+.page ul {
+  border: none;
+}
+.page span {
+  width: 45px;
+}
+.page li {
+  width: 20px;
+}
+.page input {
+  width: 40px;
+}
+.page li.select {
+  background-color: green;
+  color: #fff;
+}
+/* detail */
+
+.box2 {
+  width: 300px;
+  height: 160px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  border: 2px dotted rgb(180, 180, 180);
+}
+.box2 li {
+  height: 40px;
+  line-height: 40px;
+}
+.box2 li:nth-child(even) {
+  background-color: rgb(231, 234, 230);
+}
+.box2 li span {
+  float: left;
+  text-align: center;
+  width: 150px;
+}

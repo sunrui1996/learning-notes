@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  width: 100%;
+  font-size: 14px;
+  font-family: "微软雅黑", sans-serif;
+  overflow-x: hidden;
+  color: #424242;
+}
+ul {
+  list-style: none;
+}
+a, a:hover, a:active, a:visited, a:target {
+  text-decoration: none;
+  color: #424242;
+}
+input {
+  display: inline-block;
+  outline: none;
+}
+.w50 {
+  width: 50px;
+}
+.w150 {
+  width: 150px;
+}
+.w200 {
+  width: 200px;
+}
+/* index start */
+
+.box {
+  width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid green;
+}
+.link {
+  font-size: 16px;
+  display: inline-block;
+  margin: 4px 0 6px;
+}
+.link:hover {
+  color: green;
+  text-decoration: underline;
+}
+.head, .list li {
+  height: 35px;
+  line-height: 35px;
+}
+.head {
+  background-color: rgb(28, 177, 19);
+}
+.head span, .list li span {
+  float: left;
+  font-size: 16px;
+  text-align: center;
+}
+.head span {
+  font-weight: bold;
+  color: #fff;
+}
+.list li:nth-child(even) {
+  background-color: rgba(227, 227, 227, 0.39);
+}
+.list li:hover {
+  background-color: rgba(244, 239, 139, 0.38);
+}
+.control a {
+  display: inline-block;
+  margin: 0 5px;
+}
+/* add start */
+
+.box2 {
+  margin: 20px auto;
+  padding: 20px;
+  width: 500px;
+  border: 2px solid green;
+}
+.box2 div {
+  margin: 10px auto;
+  height: 32px;
+  line-height: 32px;
+}
+.box2 div span {
+  display: inline-block;
+  width: 50px;
+}
+.box2 div input {
+  width: 380px;
+  height: 30px;
+  padding: 0 10px;
+  line-height: 30px;
+  border: 1px solid #cdcdcd;
+}
+#userName, #userAge {
+  width: 190px;
+}
+.box2 .submit {
+  margin: 20px auto 0;
+  width: 200px;
+  height: 32px;
+  display: block;
+  background-color: green;
+  text-align: center;
+  color: #fff;
+}

@@ -1,0 +1,54 @@
+客户端和服务器端的内容数据的传输一般都是通过JSON格式的字符串进行的
+
+1、获取所有的客户信息
+  URL: "/getList"   GET
+  参数: {客户端传递给服务器端的内容}   无
+  返回: {服务器端返回给客户端的内容}
+    '{
+      "code": 0,   //返回结果的标识 0代表成功 1代表失败（没有任何的客户信息）
+      "msg": "获取成功",   //返回结果标识的说明信息
+      "data": [
+        {"id": xx, "name": "xxx", "age": xx, "phone": "xxxxxxxx", "address": "xxxxxx"},
+        {"id": xx, "name": "xxx", "age": xx, "phone": "xxxxxxxx", "address": "xxxxxx"},
+        ...
+      ]
+    }'
+
+2、获取指定客户信息
+  URL: "/getInfo"   GET
+  参数: ?id=xx   把需要获取的客户的ID传递给服务器
+  返回:
+    '{
+      "code": 0,   //0成功 1失败（当前的客户信息不存在）
+      "msg": "",
+      "data": [
+        {"id": xx, "name": "xxx", "age": xx, "phone": "xxxxxxxx", "address": "xxxxxx"},
+      ]
+    }'
+
+3、增加客户信息
+  URL: "/addInfo"   POST
+  参数: 请求主体中   '{"name": "xxx", "age": xx, "phone": "xxxxxxxx", "address": "xxxxxx"}'   （在增加的过程中，ID是服务器端自动按照规律生成的：在现有的最后一个客户ID的基础上+1即可）
+  返回:
+    '{
+      "code": 0,   //0成功 1失败
+      "msg": ""
+    }'
+
+4、修改客户信息
+  URL: "/updateInfo"   POST
+  参数: 请求主体中   '{"id": xx, "name": "xxx", "age": xx, "phone": "xxxxxxxx", "address": "xxxxxx"}'
+  返回:
+    '{
+      "code": 0,   //0成功 1失败
+      "msg": ""
+    }'
+
+5、删除客户信息
+  URL: "/removeInfo"   GET
+  参数: ?id=xx
+  返回:
+    '{
+      "code": 0,   //0成功 1失败
+      "msg": ""
+    }'

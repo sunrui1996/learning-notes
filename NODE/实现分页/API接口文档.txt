@@ -1,0 +1,39 @@
+1、获取指定页的数据
+  URL: "/getList"   GET
+  参数: ?n=xx   告诉服务器要获取的是第几页数据
+  返回:
+    '{
+      "code": 0,   // 0成功 1失败
+      "msg": "",
+      "total": xx,   // 服务器端返回总页数
+      "data": [
+        {
+          "num": xx,
+          "name": "xxx",
+          "sex": 0,   // 0男 1女
+          "score": xx
+        },
+        {
+          "num": xx,
+          "name": "xxx",
+          "sex": 0,   // 0男 1女
+          "score": xx
+        },
+        ...
+      ]
+    }'
+
+2、获取指定学员的信息
+  URL: "/getInfo"   GET
+  参数: ?id=xx
+  返回:
+    '{
+      "code": 0,
+      "msg": "",
+      "data": {
+        "id": xx,
+        "name": "xxx",
+        "sex": 0,
+        "score": xx
+      }
+    }'
