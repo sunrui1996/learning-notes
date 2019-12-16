@@ -1,0 +1,13 @@
+Q: [] == ![] 的结果为什么是 true
+A: (1) == 左边的 [] 转换成 Number 0
+   (2) == 右边的 ![] 先转换成 !1，再转换成 Number 0
+   (3) 0 == 0 结果为 true
+
+Q: 如何让 a == 1 && a == 2 && a == 3 返回 true
+A: var a = {
+     value: 0,
+     valueOf () {
+       this.value += 1;
+       return this.value;
+     }
+   };

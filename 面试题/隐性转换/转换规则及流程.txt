@@ -1,0 +1,12 @@
+转换规则:
+    1、判断 == 两边的变量类型是否相同，相同的话就比较值大小
+    2、判断 == 两边的变量是否是 null 和 undefined，是的话就返回 true
+    3、判断 == 两边的变量类型是否是 String 和 Number，是的话就把 String 类型转换成 Number 类型，再比较值大小
+    4、判断 == 两边的其中一方是否是 Boolean，是的话就把 Boolean 类型转换成 Number 类型，再比较值大小
+    5、判断 == 两边的其中一方是否是 Object，并且另一方是 String、Number、或者 Symbol，是的话将 Object 类型转换成字符串，再进行比较
+
+转换流程:
+    1、如果 Symbol.toPrimitive()方法存在，优先调用再返回
+    2、调用 valueOf()方法，如果转换为原始类型，则返回
+    3、调用 toString()方法，如果转换为原始类型，则返回
+    4、如果都没有返回原始类型，则报错

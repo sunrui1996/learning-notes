@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  </head>
+  <body>
+    <script>
+      let url = "https://github.com/sunrui0217/learning_notes?wd=javascript&rsv_spt=1";
+
+      function queryUrlParmeter(url) {
+        let obj = {};
+        let link = document.createElement('a');
+        link.href = url;
+        let search = link.search.slice(1);
+        if (search === "") return obj;
+        search = search.split(/[=|&]/g);
+        for (let i = 0; i < search.length; i += 2) {
+          obj[search[i]] = search[i + 1];
+        }
+        return obj;
+      }
+
+      console.log(queryUrlParmeter(url));
+
+    </script>
+  </body>
+</html>
