@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>打字机</title>
+  </head>
+  <body>
+    <input id="input" type="text" placeholder="请输入内容">
+    <button id="btn">显示打字机效果</button>
+    <p id="content"></p>
+
+    <script>
+      let inputEle = document.getElementById("input");
+      let btnEle = document.getElementById("btn");
+      let contentEle = document.getElementById("content");
+      let timerId = null;
+      let speed = 400;
+
+      btnEle.addEventListener("click", () => {
+        timerId && clearTimeout(timerId);
+        let contentArr = inputEle.value.split("");
+        let length = contentArr.length;
+        if (length === 0) return;
+        let index = 0;
+        contentEle.innerText = "";
+
+        let write = () => {
+          timerId = setTimeout(() => {
+            contentEle.innerText += contentArr[index];
+            index += 1;
+            if (index < length) write();
+          }, speed);
+        };
+        write();
+      });
+    </script>
+  </body>
+</html>
