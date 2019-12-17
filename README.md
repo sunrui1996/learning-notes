@@ -24,6 +24,7 @@ JS
 - [函数（防抖）](https://github.com/sunrui0217/learning_notes/blob/master/JS/函数（防抖）.js)
 - [对象（实现create）](https://github.com/sunrui0217/learning_notes/blob/master/JS/对象（实现create）.js)
 - [对象（实现new）](https://github.com/sunrui0217/learning_notes/blob/master/JS/对象（实现new）.js)
+- [对象（实现map）](https://github.com/sunrui0217/learning_notes/blob/master/JS/对象（实现map）.js)
 - [数组（去重）](https://github.com/sunrui0217/learning_notes/blob/master/JS/数组（去重）.js)
 - [数组（实现map）](https://github.com/sunrui0217/learning_notes/blob/master/JS/数组（实现map）.js)
 - [数组（实现reduce）](https://github.com/sunrui0217/learning_notes/blob/master/JS/数组（实现reduce）.js)
