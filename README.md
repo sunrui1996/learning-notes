@@ -29,6 +29,7 @@ JS
 - [数组（去重）](https://github.com/sunrui0217/learning-notes/blob/master/JS/数组（去重）.js)
 - [数组（实现map）](https://github.com/sunrui0217/learning-notes/blob/master/JS/数组（实现map）.js)
 - [数组（实现reduce）](https://github.com/sunrui0217/learning-notes/blob/master/JS/数组（实现reduce）.js)
+- [数组（实现reverse）](https://github.com/sunrui0217/learning-notes/blob/master/JS/数组（实现reverse）.js)
 - [正则（千分符）](https://github.com/sunrui0217/learning-notes/blob/master/JS/正则（千分符）.js)
 - [正则（单词首字母大写）](https://github.com/sunrui0217/learning-notes/blob/master/JS/正则（单词首字母大写）.js)
 - [正则（去除首尾空格）](https://github.com/sunrui0217/learning-notes/blob/master/JS/正则（去除首尾空格）.js)
