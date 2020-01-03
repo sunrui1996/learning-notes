@@ -20,6 +20,7 @@ CSS
 
 JS
 - [函数（检测变量类型）](https://github.com/sunrui0217/learning-notes/blob/master/JS/函数（检测变量类型）.js)
+- [函数（简版深克隆）](https://github.com/sunrui0217/learning-notes/blob/master/JS/函数（简版深克隆）.js)
 - [函数（节流）](https://github.com/sunrui0217/learning-notes/blob/master/JS/函数（节流）.js)
 - [函数（防抖）](https://github.com/sunrui0217/learning-notes/blob/master/JS/函数（防抖）.js)
 - [对象（实现create）](https://github.com/sunrui0217/learning-notes/blob/master/JS/对象（实现create）.js)
