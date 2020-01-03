@@ -56,6 +56,7 @@ JS
 - [冒泡排序](https://github.com/sunrui0217/learning-notes/blob/master/基础算法/冒泡排序.js)
 - [快速排序](https://github.com/sunrui0217/learning-notes/blob/master/基础算法/快速排序.js)
 - [插入排序](https://github.com/sunrui0217/learning-notes/blob/master/基础算法/插入排序.js)
+- [斐波那契](https://github.com/sunrui0217/learning-notes/blob/master/基础算法/斐波那契.js)
 
 NODE
 - [处理静态资源](https://github.com/sunrui0217/learning-notes/tree/master/NODE/处理静态资源)
