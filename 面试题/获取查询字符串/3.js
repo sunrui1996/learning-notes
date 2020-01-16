@@ -1,4 +1,4 @@
-let url = "https://github.com/sunrui0217/learning-notes?wd=javascript&rsv_spt=1";
+let url = "https://github.com/sunrui1996/learning-notes?wd=javascript&rsv_spt=1";
 
 function queryUrlParmeter(url) {
   let obj = {};
