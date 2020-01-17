@@ -3,9 +3,8 @@ function throttle (fn, interval = 500) {
   return function (...args) {
     if (!flag) return;
     flag = false;
-    let context = this;
     setTimeout(() => {
-      fn.apply(context, args);
+      fn.call(this, ...args);
       flag = true;
     }, interval);
   }
