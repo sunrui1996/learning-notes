@@ -75,6 +75,7 @@ NODE
 - [轮播图（淡入淡出）](https://sunrui1996.github.io/learning-notes/很小很小的case/轮播图（淡入淡出）/index.html)
 - [选项卡](https://sunrui1996.github.io/learning-notes/很小很小的case/选项卡/index.html)
 - [回到顶部](https://sunrui1996.github.io/learning-notes/很小很小的case/回到顶部.html)
+- [图片拖拽预览](https://sunrui1996.github.io/learning-notes/很小很小的case/图片拖拽预览.html)
 - [生成随机验证码](https://sunrui1996.github.io/learning-notes/很小很小的case/生成随机验证码.html)
 - [跑马灯](https://sunrui1996.github.io/learning-notes/很小很小的case/跑马灯.html)
 - [打字机](https://sunrui1996.github.io/learning-notes/很小很小的case/打字机.html)

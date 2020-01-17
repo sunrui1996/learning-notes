@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>图片拖拽预览</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+      }
+      .box {
+        margin-bottom: 20px;
+        width: 340px;
+        height: 160px;
+        color: #ccc;
+        border: 1px solid #ccc;
+        overflow-y: auto;
+      }
+      .file {
+        float: left;
+        margin: 5px;
+        width: 70px;
+        height: 70px;
+      }
+      .green {
+        border-color: green;
+      }
+      .btn {
+        width: 80px;
+        line-height: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>只支持图片拖拽（可多张）</p>
+    <div class="box" id="box"></div>
+    <button class="btn" id="btn" type="button">清空</button>
+
+    <script>
+      let boxEle = document.getElementById("box");
+      let btnEle = document.getElementById("btn");
+
+      function forbiddenEvent(e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      function dragenterHandler(e) {
+        forbiddenEvent(e);
+        boxEle.classList.add("green");
+      }
+      function dragoverHandler(e) {
+        forbiddenEvent(e);
+      }
+      function dragleaveHandler(e) {
+        forbiddenEvent(e);
+        boxEle.classList.remove("green");
+      }
+      function dropHandler(e) {
+        forbiddenEvent(e);
+        boxEle.classList.remove("green");
+        handleFiles(e.dataTransfer.files);
+      }
+      function handleFiles(files) {
+        files = Array.from(files);
+        files.forEach(file => {
+          if (!file.type.includes("image/")) return;
+          // 通过 FileReader 实现预览
+          // let reader = new FileReader();
+          // reader.readAsDataURL(file);
+          // reader.onload = function(e) {
+          // 	let image = new Image();
+          // 	image.setAttribute("class", "file");
+          // 	image.src = e.target.result;
+          // 	boxEle.appendChild(image);
+          // }
+
+          // 通过 ObjectURL 实现预览
+          window.URL = window.URL || window.webkitURL;
+          let url = window.URL.createObjectURL(file);
+          let image = new Image();
+          image.setAttribute("class", "file");
+          image.src = url;
+          boxEle.appendChild(image);
+        });
+      }
+
+      boxEle.addEventListener("dragenter", dragenterHandler);
+      boxEle.addEventListener("dragover", dragoverHandler);
+      boxEle.addEventListener("dragleave", dragleaveHandler);
+      boxEle.addEventListener("drop", dropHandler);
+      btnEle.addEventListener("click", function() {
+        boxEle.innerHTML = "";
+      });
+    </script>
+  </body>
+</html>
