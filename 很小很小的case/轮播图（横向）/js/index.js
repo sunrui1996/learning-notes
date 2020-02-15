@@ -8,37 +8,45 @@
   var btnRight = utils.getElementsByClass("btnRight")[0];
   var interval = 2500;
   var speed = 400;
+  var step = 0;
+  var timerId = null;
 
-  // 动态绑定数据
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", "js/data.json", false);
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
-      var data = utils.formatJSON(xhr.responseText);
+  setTimeout(function() {
+    bindData();
+    setTimeout(loadImg, 500);
+    initBanner();
+    bindEvents();
+  }, 2000);
+
+  // 绑定数据
+  function bindData() {
+    var data = [
+      {"src": "images/1.jpg"},
+      {"src": "images/2.jpg"},
+      {"src": "images/3.jpg"},
+      {"src": "images/4.jpg"},
+      {"src": "images/5.jpg"},
+      {"src": "images/6.jpg"},
+      {"src": "images/7.jpg"}
+    ];
+    var innerStr = "";
+    var ulStr = "";
+
+    // 绑定轮播图
+    for (var i = 0; i < data.length; i++) {
+      innerStr += '<div><img src="" data-src="' + data[i].src + '" alt="' + data[i].desc + '"></div>';
+    }
+    innerStr += '<div><img src="" data-src="' + data[0].src + '"></div>';
+    inner.innerHTML = innerStr;
+    utils.css(inner, "width", imgList.length * 800);
+
+    // 绑定焦点
+    for (i = 0; i < imgList.length - 1; i++) {
+      i === 0 ? ulStr += '<li class="select"></li>' : ulStr += '<li></li>';
     }
 
-    var str = "";
-
-    if (data) {
-      // 绑定轮播图
-      for (var i = 0; i < data.length; i++) {
-        str += '<div><img src="" data-src="' + data[i].src + '" alt="' + data[i].desc + '"></div>';
-      }
-
-      str += '<div><img src="" data-src="' + data[0].src + '" alt="' + data[0].desc + '"></div>';
-      inner.innerHTML = str;
-      utils.css(inner, "width", imgList.length * 800);
-      // 绑定焦点
-      str = "";
-
-      for (i = 0; i < imgList.length - 1; i++) {
-        i === 0 ? str += '<li class="select"></li>' : str += '<li></li>';
-      }
-
-      ul.innerHTML = str;
-    }
-  };
-  xhr.send();
+    ul.innerHTML = ulStr;
+  }
 
   // 图片懒加载
   function loadImg() {
@@ -58,13 +66,12 @@
     }
   }
 
-  setTimeout(loadImg, 500);
+  // 初始化轮播图
+  function initBanner() {
+    timerId = setInterval(autoMove, interval);
+  }
 
   // 自动轮播
-  // 当前图片索引
-  var step = 0;
-  var timer = setInterval(autoMove, interval);
-
   function autoMove() {
     if (step === oLis.length) {
       step = 0;
@@ -87,46 +94,49 @@
     }
   }
 
-  // 停止和开启自动轮播
-  banner.onmouseover = function () {
-    clearInterval(timer);
-    btnLeft.style.display = "block";
-    btnRight.style.display = "block";
-  };
-  banner.onmouseout = function () {
-    timer = setInterval(autoMove, interval);
-    btnLeft.style.display = "none";
-    btnRight.style.display = "none";
-  };
+  // 绑定事件
+  function bindEvents() {
+    // 停止和开启自动轮播
+    banner.onmouseover = function () {
+      clearInterval(timerId);
+      btnLeft.style.display = "block";
+      btnRight.style.display = "block";
+    };
+    banner.onmouseout = function () {
+      timerId = setInterval(autoMove, interval);
+      btnLeft.style.display = "none";
+      btnRight.style.display = "none";
+    };
 
-  // 点击焦点实现轮播图切换
-  for (var i = 0; i < oLis.length; i++) {
-    oLis[i].index = i;
-    oLis[i].onclick = function () {
-      step = this.index;
+    // 点击焦点实现轮播图切换
+    for (var i = 0; i < oLis.length; i++) {
+      oLis[i].index = i;
+      oLis[i].onclick = function () {
+        step = this.index;
+        changeTip();
+        utils.move(inner, {left: step * -800}, speed);
+      }
+    }
+
+    // 点击按钮实现轮播图左右切换
+    btnLeft.onclick = function () {
+      if (step === 0) {
+        step = oLis.length;
+        utils.css(inner, "left", oLis.length * -800);
+      }
+
+      step -= 1;
       changeTip();
       utils.move(inner, {left: step * -800}, speed);
-    }
+    };
+    btnRight.onclick = function () {
+      if (step === oLis.length) {
+        step = 0;
+        utils.css(inner, "left", 0);
+      }
+      step += 1;
+      changeTip();
+      utils.move(inner, {left: step * -800}, speed);
+    };
   }
-
-  // 点击按钮实现轮播图左右切换
-  btnLeft.onclick = function () {
-    if (step === 0) {
-      step = oLis.length;
-      utils.css(inner, "left", oLis.length * -800);
-    }
-
-    step -= 1;
-    changeTip();
-    utils.move(inner, {left: step * -800}, speed);
-  };
-  btnRight.onclick = function () {
-    if (step === oLis.length) {
-      step = 0;
-      utils.css(inner, "left", 0);
-    }
-    step += 1;
-    changeTip();
-    utils.move(inner, {left: step * -800}, speed);
-  };
 })();

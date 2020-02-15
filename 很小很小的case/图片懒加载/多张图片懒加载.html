@@ -15,24 +15,65 @@
       let news = document.getElementById("news");
       let imgList = news.getElementsByTagName("img");
 
-      // 1、获取需要绑定的数据
-      let xhr = new XMLHttpRequest();
-      xhr.open("GET", "data.json");
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && /^2\d{2}$/.test(xhr.status)) {
-          let responseText = xhr.responseText;
-          let data = JSON.parse(responseText);
+      bindData();
+      initLazyLoad();
 
-          // 2、数据绑定，把 data 中存储的数据绑定在页面中
-          let str = "";
-          for (let i = 0; i < data.length; i++) {
-            str += '<li><div><img src="" data-src="' + data[i].src + '" alt=""></div><div><h2>' + data[i].title + '</h2><p>' + data[i].description + '</p></div></li>';
-          }
-          news.innerHTML = str;
+      // 绑定数据
+      function bindData() {
+        var data = [
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713494957&di=efd605320b0fc94a3b0eb033f6115c65&imgtype=0&src=http%3A%2F%2Ftvax4.sinaimg.cn%2Fcrop.14.0.722.722.180%2F006bt7sbly8fjs13kxf64j30ku0k2t9i.jpg", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491599&di=1ac77506d7330603077f3a23cb8e225d&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2F16df21da5ce74f95adff79c695b59e8320180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713491028&di=07b352045df7120fd83260f3fc5bf1ef&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Ffb84cf3f6147404981bded5778e4e29920180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"},
+          {"src": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1518713489991&di=7f81838677f513d31ee79da0c1be9e01&imgtype=0&src=http%3A%2F%2Fcms-bucket.nosdn.127.net%2Fb8a6685a50984196b0dc50d697b4c7db20180215132937.jpeg%3FimageView%26thumbnail%3D550x0", "title": "如果世界漆黑其实我真的真的很美", "description": "奋斗不止，只为提升自己能力，给你更好生活"}
+        ];
+
+        // 数据绑定，把 data 中存储的数据绑定在页面中
+        let str = "";
+        for (let i = 0; i < data.length; i++) {
+          str += '<li><div><img src="" data-src="' + data[i].src + '"></div><div><h2>' + data[i].title + '</h2><p>' + data[i].description + '</p></div></li>';
         }
-      };
-      xhr.send();
-
+        news.innerHTML = str;
+      }
 
       // 实现懒加载
       function loadImg(curImg) {
@@ -72,9 +113,11 @@
         }
       }
 
-      // 触发懒加载绑定
-      setTimeout(handleAllImg, 100);
-      window.onscroll = handleAllImg;
+      // 初始化懒加载
+      function initLazyLoad() {
+        setTimeout(handleAllImg, 100);
+        window.onscroll = handleAllImg;
+      }
 
       function getCss(curEle, attr) {
         var val = null,
