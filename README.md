@@ -48,9 +48,9 @@ js
 - [移入移出（放大镜）](https://sunrui1996.github.io/learning-notes/事件/移入移出（放大镜）/index.html)
 
 兼容封装
-- [ajax](https://sunrui1996.github.io/learning-notes/兼容封装/ajax.js)
-- [event](https://sunrui1996.github.io/learning-notes/兼容封装/event.js)
-- [placeholder](https://sunrui1996.github.io/learning-notes/兼容封装/placeholder.js)
+- [ajax](https://github.com/sunrui1996/learning-notes/blob/master/兼容封装/ajax.js)
+- [event](https://github.com/sunrui1996/learning-notes/blob/master/兼容封装/event.js)
+- [placeholder](https://github.com/sunrui1996/learning-notes/blob/master/兼容封装/placeholder.js)
 
 基础算法
 - [冒泡排序](https://github.com/sunrui1996/learning-notes/blob/master/基础算法/冒泡排序.js)
@@ -91,4 +91,5 @@ node
 - [闭包+this指向](https://github.com/sunrui1996/learning-notes/tree/master/面试题/闭包+this指向)
 - [闭包](https://github.com/sunrui1996/learning-notes/tree/master/面试题/闭包)
 - [隐性转换](https://github.com/sunrui1996/learning-notes/tree/master/面试题/隐性转换)
+- [实现Node中的回调函数机制](https://github.com/sunrui1996/learning-notes/blob/master/面试题/实现Node中的回调函数机制.js)
 - [循环绑定click（腾讯）](https://github.com/sunrui1996/learning-notes/tree/master/面试题/循环绑定click（腾讯）.html)
