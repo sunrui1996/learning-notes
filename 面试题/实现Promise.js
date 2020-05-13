@@ -29,6 +29,68 @@ function MyPromise (executor) {
   }
 }
 
+MyPromise.resolve = param => {
+  if (param instanceof MyPromise) return param
+
+  return new MyPromise((resolve, reject) => {
+    if (param && param.then && typeof param.then === 'function') {
+      setTimeout(() => {
+        param.then(resolve, reject)
+      })
+    } else {
+      resolve(param)
+    }
+  })
+}
+
+MyPromise.reject = reason => {
+  return new MyPromise((resolve, reject) => {
+    reject(reason)
+  })
+}
+
+MyPromise.all = promises => {
+  return new MyPromise((resolve, reject) => {
+    const result = []
+
+    if (promises.length === 0) {
+      resolve(result)
+    } else {
+      const processValue = (index, value) => {
+        result[index] = value
+        if (index === promises.length - 1) {
+          resolve(result)
+        }
+      }
+      
+      for (let i = 0; i < promises.length; i++) {
+        MyPromise.resolve(promises[i]).then(value => {
+          processValue(i, value)
+        }, reason => {
+          reject(reason)
+          return
+        })
+      }
+    }
+  })
+}
+
+MyPromise.race = promises => {
+  return new MyPromise((resolve, reject) => {
+    if (promises.length === 0) return
+
+    for (let i = 0; i < promises.length; i++) {
+      MyPromise.resolve(promises[i]).then(value => {
+        resolve(value)
+        return
+      }, reason => {
+        reject(reason)
+        return
+      })
+    }
+  })
+}
+
 MyPromise.prototype.then = function (onFulfilled, onRejected) {
   if (typeof onFulfilled !== 'function') onFulfilled = value => value
   if (typeof onRejected !== 'function') onRejected = reason => { throw reason }
@@ -77,6 +139,22 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
   })
 
   return promise2
+}
+
+MyPromise.prototype.catch = function (onRejected) {
+  return this.then(null, onRejected)
+}
+
+MyPromise.prototype.finally = function (callback) {
+  return this.then(value => {
+    return MyPromise.resolve(callback()).then(() => {
+      return value
+    })
+  }, reason => {
+    return MyPromise.reject(callback()).then(() => {
+      throw reason
+    })
+  })
 }
 
 const resolvePromise = (promise2, x, resolve, reject) => {
